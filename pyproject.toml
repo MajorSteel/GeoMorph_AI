@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geomorph"
+version = "1.0.0"
+description = "Transformer-based Geospatial Semantic Segmentation & GIS Vector Intelligence Framework"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision",
+    "segmentation-models-pytorch",
+    "transformers>=4.30.0",
+    "geopandas",
+    "rasterio",
+    "shapely",
+    "scikit-learn",
+    "matplotlib",
+    "pandas",
+    "opencv-python-headless",
+    "tqdm",
+    "pyyaml"
+]
+
+[project.scripts]
+geomorph = "scripts.cli:main"
