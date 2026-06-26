@@ -1,0 +1,14 @@
+torch>=2.0.0
+torchvision
+torchaudio
+segmentation-models-pytorch
+transformers>=4.30.0
+geopandas
+rasterio
+shapely
+scikit-learn
+matplotlib
+pandas
+opencv-python-headless
+tqdm
+pyyaml

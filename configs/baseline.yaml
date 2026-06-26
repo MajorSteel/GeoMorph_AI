@@ -1,0 +1,37 @@
+project:
+  name: "geospatial-segformer"
+  seed: 42
+
+data:
+  image_dir: "aerial_imagery_pack"
+  label_dir: "feature_layers"
+  num_workers: 4
+  tile_size: 512
+  inference_overlap: 128
+  batch_size: 4
+  bg_suppression_threshold: 0.95
+
+model:
+  architecture: "segformer"
+  encoder: "nvidia/mit-b0"
+  encoder_weights: "imagenet"
+  in_channels: 3
+  classes: 8
+
+training:
+  epochs: 40
+  phase1_epochs: 10
+  encoder_lr: 0.00001
+  decoder_lr: 0.0001
+  weight_decay: 0.01
+  patience: 7
+  mixed_precision: true
+  loss: "ce_dice"
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  class_weights: [1.0, 1.0, 2.0, 5.0, 1.0, 2.0, 2.0, 0.2]
+
+inference:
+  threshold: 0.5
+  min_area: 32
+  simplify_tolerance: 2.0

@@ -1,0 +1,31 @@
+# Data and Outputs (Do not commit heavy imagery or results)
+aerial_imagery_pack/
+feature_layers/
+results/
+*.zip
+*.tar.gz
+
+# Python Caches & Virtual Environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.env/
+.venv/
+
+# Jupyter & IDEs
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*.swp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
