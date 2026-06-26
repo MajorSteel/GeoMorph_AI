@@ -17,6 +17,17 @@
 
 ---
 
+## 📸 Results & Ground Truth Comparison
+
+By applying the class-weighted CE+Dice loss and overlapping sliding-window inference, GeoMorph AI accurately segments highly complex urban and natural environments.
+
+| Model Output Overlay | Raw Model Prediction Mask |
+| :---: | :---: |
+| <img src="assets/1_overlay.png" width="400"> | <img src="assets/1_mask.png" width="400"> |
+| *Visual representation of predictions superimposed on raw imagery* | *Raw class segmentation masks prior to GIS vectorization* |
+
+---
+
 ## 🛠️ Installation
 
 ```bash
