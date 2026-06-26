@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="assets/banner.png" alt="GeoMorph AI Banner" width="100%">
   
   <img src="assets/logo.png" alt="GeoMorph AI Logo" width="120" height="120" style="margin-top: 20px;">
   
