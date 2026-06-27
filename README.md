@@ -47,7 +47,66 @@ By default, the pipeline extracts the following 8 classes from your GeoJSON grou
 
 ---
 
-## Architecture Flow
+
+
+## Quickstart
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/MajorSteel/GeoMorph_AI.git
+cd GeoMorph_AI
+
+# Install via setup tools (registers the CLI)
+pip install -e .
+```
+
+### Command Line Interface
+
+We have integrated a dedicated CLI. Run operations from anywhere:
+
+```bash
+# Train the model
+geomorph train --config configs/baseline.yaml
+
+# Run Inference
+geomorph predict --image data.tiff --weights best.pt
+
+# Run Benchmarks
+geomorph benchmark --config configs/baseline.yaml
+```
+
+---
+
+## 🧪 Evaluator's Blind Testing Guide
+
+If you are an evaluator from Ottermap (or any third party) and wish to test GeoMorph AI on a **completely unseen satellite image**, follow these steps. Our Overlapping Sliding-Window engine ensures that you can feed in imagery of **any arbitrary resolution** without facing GPU Memory/OOM crashes.
+
+### 1. Download Model Weights
+Ensure you have downloaded the trained `best.pt` file from the provided Google Drive link and placed it in the `models/` directory:
+```bash
+mkdir models
+# Place best.pt inside the models/ folder
+```
+
+### 2. Run the Inference Engine
+Run our CLI inference engine on your blind image. The engine will automatically chunk your image, predict on the tiles, stitch them back together seamlessly using the Cosine-Bell matrix, and extract vector contours.
+
+```bash
+python scripts/cli.py predict --input "/path/to/your/blind_image.tiff" --weights "models/best.pt" --output_dir "results/blind_test"
+```
+
+### 3. View the Outputs
+The pipeline will generate the following deliverables in your `--output_dir`:
+- `*_mask.png`: The raw semantic segmentation mask (color-coded to our 8 classes).
+- `*_overlay.png`: A high-resolution alpha-blended visualization overlaying the predictions on your original image.
+- `*_vectorized.geojson`: The highly simplified, production-ready GIS polygon features mapping the predicted boundaries.
+
+
+## Architecture & Model Design
+
+### End-to-End Pipeline Flowchart
 
 ```mermaid
 graph TD
@@ -110,65 +169,7 @@ graph TD
 
 ---
 
-## Quickstart
 
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/MajorSteel/GeoMorph_AI.git
-cd GeoMorph_AI
-
-# Install via setup tools (registers the CLI)
-pip install -e .
-```
-
-### Command Line Interface
-
-We have integrated a dedicated CLI. Run operations from anywhere:
-
-```bash
-# Train the model
-geomorph train --config configs/baseline.yaml
-
-# Run Inference
-geomorph predict --image data.tiff --weights best.pt
-
-# Run Benchmarks
-geomorph benchmark --config configs/baseline.yaml
-```
-
----
-
-
----
-
-## 🧪 Evaluator's Blind Testing Guide
-
-If you are an evaluator from Ottermap (or any third party) and wish to test GeoMorph AI on a **completely unseen satellite image**, follow these steps. Our Overlapping Sliding-Window engine ensures that you can feed in imagery of **any arbitrary resolution** without facing GPU Memory/OOM crashes.
-
-### 1. Download Model Weights
-Ensure you have downloaded the trained `best.pt` file from the provided Google Drive link and placed it in the `models/` directory:
-```bash
-mkdir models
-# Place best.pt inside the models/ folder
-```
-
-### 2. Run the Inference Engine
-Run our CLI inference engine on your blind image. The engine will automatically chunk your image, predict on the tiles, stitch them back together seamlessly using the Cosine-Bell matrix, and extract vector contours.
-
-```bash
-python scripts/cli.py predict --input "/path/to/your/blind_image.tiff" --weights "models/best.pt" --output_dir "results/blind_test"
-```
-
-### 3. View the Outputs
-The pipeline will generate the following deliverables in your `--output_dir`:
-- `*_mask.png`: The raw semantic segmentation mask (color-coded to our 8 classes).
-- `*_overlay.png`: A high-resolution alpha-blended visualization overlaying the predictions on your original image.
-- `*_vectorized.geojson`: The highly simplified, production-ready GIS polygon features mapping the predicted boundaries.
-
-
-## Architecture & Model Design
 
 GeoMorph AI departs from traditional Convolutional Neural Networks (CNNs) like U-Net and DeepLabV3 by utilizing a purely attention-based **SegFormer** architecture. Specifically, the pipeline is built on top of the HuggingFace `nvidia/mit-b0` backbone.
 
